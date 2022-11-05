@@ -30,7 +30,6 @@ A.draw(ctx,unit,centerX,centerY)
 `
 where `
 x : is the x coordinates of the Point 
-----------
 y : is the y coordinates of the Point
 ctx : the 2D canvas context
 unit : unit for scaling
