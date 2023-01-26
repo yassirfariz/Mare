@@ -3,9 +3,8 @@ A graphing program that simulates geometry objects (Vectors , Points , Vector fi
 # Note that this project is not fully completed and it will be supported until Q4 2025
 ## Rendering 
 #### Graphics is being renderd using 2d canvas context wich is so powerfull 
-but not as fast as pure WebGl wich uses GLSL for shaders rendering using the core of graphics
-it may come in future updates as an option when making
-## Math
+but not as fast as pure WebGl wich uses GLSL for shaders rendering
+it may come in future updates as an option 
 ### Vectors
 #### this simulation library provides an easy to use Vector system in 2d space
 it uses this syntaxe
