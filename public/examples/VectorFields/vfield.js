@@ -8,7 +8,7 @@ var z = new Point(-1,-4)
 t = 0
 var p1 = []
 var p2 = []
-var txt = new Text_("fx(x,y) = -ycos x",[-10,3],"Consolas",36)
+var txt = new Text_("fx(x,y) = -y+cos x",[-10,3],"Consolas",36)
 var txt2 = new Text_("fy(x,y) = x+sin y",[-10,1],"Consolas",36)
 function animate(){
     ctx.fillStyle = "black";
