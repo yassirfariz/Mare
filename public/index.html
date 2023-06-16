@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>exp</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            overflow: hidden;
+            justify-content: center;
+            align-items: center;
+            /* center horizontaly  */
+            /* center horizontaly child items*/
+            flex-direction: column;
+            background-color: black;
+        }
+        .listex{
+            background-color: black;
+            border: 2px solid yellow;
+            padding: 20px;
+            font-size: 26px;
+        }
+        .ex{
+            background-color: aliceblue;
+            border-radius: 10px;
+            border: none;
+            padding: 10px;
+            margin: 10px;
+
+        }
+        .ex a {
+            background-color: rgb(30, 30, 134);
+            text-decoration: none;
+            padding: 5px;
+            color: whitesmoke;
+            border-radius:10px;
+            font-weight: 1000;
+            margin-right: 0;transition: ease-in-out 200ms;
+        }
+        .ex a:hover{
+            background-color: rgb(50, 50, 138);
+            box-shadow: gray 10px 1px 10px;
+            transform: scale(2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Examples</h1>
+    <div class="listex">
+        <div class="ex">
+            Functions
+            <a href="./examples/functions/functions.html">try it out</a>
+        </div>
+        <div class="ex">
+            3D
+            <a href="./examples/3D plane/3d.html">try it out</a>
+        </div>
+        <div class="ex">
+            VectorFields
+            <a href="./examples/VectorFields/vfield.html">try it out</a>
+        </div>
+    </div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyBxfv3kOlP7V0V5PAVFa2fBLvBJgVHMtSw",
+          authDomain: "graphical-sim.firebaseapp.com",
+          projectId: "graphical-sim",
+          storageBucket: "graphical-sim.appspot.com",
+          messagingSenderId: "914948501368",
+          appId: "1:914948501368:web:88f204984fef1ead99a28d",
+          measurementId: "G-DW7KLSNNVY"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+      </script>
+</body>
+</html>
