@@ -1,4 +1,4 @@
-# Graphs
+# Masm
 A graphing program that simulates geometry objects (Vectors , Points , Vector fields ...)
 # Note that this project is not fully completed and it will be supported until Q4 2025
 ## Rendering 
@@ -34,3 +34,6 @@ ctx : the 2D canvas context
 unit : unit for scaling
 centerX and centerY : center of the window
 `
+## For more details:
+https://graphical-sim.web.app/
+https://graphical-sim.firebaseapp.com
