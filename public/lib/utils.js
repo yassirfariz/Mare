@@ -12,7 +12,7 @@ function initialize(canvas,q = 1.35){
     canvas.style = "width:100%;height:100%;"
     var centerX = canvas.width/2;
     var centerY = canvas.height/2;
-    var unit = 105;
+    var unit = 38*centerX/centerY;
     var t = -4;
     return [ctx,unit,centerX,centerY,t]
 }

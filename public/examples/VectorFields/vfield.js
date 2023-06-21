@@ -1,8 +1,8 @@
 var canvas = document.getElementById("canvas")
 var [ctx,unit,centerX,centerY,t] = initialize(canvas,1.3)
 controls()
-centerX +=450
-unit-=20
+centerX +=3*unit
+unit-= 20
 var s = new Point(-2,1)
 var z = new Point(-1,-4)
 t = 0
@@ -13,7 +13,7 @@ var txt2 = new Text_("fy(x,y) = x+sin y",[-10,1],"Consolas",36)
 function animate(){
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    var f = new VectorField([-4,4],[-3,3],(x,y)=>{return -y+Math.cos(x)},(x,y)=>{return x-Math.sin(y)},1.5)
+    var f = new VectorField([-4,4],[-3,3],(x,y)=>{return -y+Math.cos(x)},(x,y)=>{return x-Math.sin(y)},1)
     var g1 = f.dv(s)
     var g2 = f.dv(z)
     var crd = new Text_(`S(${Math.round(s.x*10000)/10000},${Math.round(s.y*1000)/1000})`,[s.x-0.25,s.y+0.25],"Consolas",16)

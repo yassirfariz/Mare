@@ -15,9 +15,6 @@ ct = t
 function cs(ctx,x,y,t) {
     ctx.beginPath()
         p.push([x,y])
-        if (t !== ct){
-            p.push([x,y])
-        }
         ctx.strokeStyle = "blue"
         ctx.lineWidth = 4
         if (p.length > 5) {
@@ -29,6 +26,7 @@ function cs(ctx,x,y,t) {
         ctx.stroke()
         ctx.closePath()
 }
+
 t=0
 var a = -10
 controls(1,1,0.001)
