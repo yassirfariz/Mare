@@ -5,41 +5,51 @@ function r(x,d){
     return Math.round(x*10**d)/10**d
 }
 p = []
+t=0
+ct = t
 /**
  * 
  * @param {CanvasRenderingContext2D} ctx 
- * @param {number} x
- * @param {number} y 
+ * @param {Point3D} o
+ * @param {number} t 
+ * @param {Plan3D} z 
  */
-ct = t
-function cs(ctx,x,y,t) {
+function cs(ctx,o,t,z) {
     ctx.beginPath()
-        p.push([x,y])
-        ctx.strokeStyle = "blue"
+    p.push([o.xr,o.yr,o.x,o.y,o.z])
+    ctx.strokeStyle = "blue"
         ctx.lineWidth = 4
-        if (p.length > 5) {
+        if (p.length > 15) {
             for(let i=1;i<p.length;i+=1){
                 ctx.moveTo(centerX+p[i-1][0]*unit,centerY-p[i-1][1]*unit)
                 ctx.lineTo(centerX+p[i][0]*unit,centerY-p[i][1]*unit)
             }
         }
         ctx.stroke()
-        ctx.closePath()
+    ctx.closePath()
+    if(t!=ct){
+        for(let i=0;i<p.length;i+=1){
+            var [x,y] = [p[i][2],p[i][3]]  
+            p[i][0] = z.xr(x,y);
+            p[i][1] = z.yr(x,y,p[i][4]);
+        }
+        ct=t
+    }
 }
 
-t=0
+
 var a = -10
 controls(1,1,0.001)
 function animate(){
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    var p = new Plan3D([-3,3],t)
-    var o = new Point3D(a/5,Math.cos(a),Math.sin(a),p)
-    var txt = new Text_(`P(${r(o.x,2)},${r(o.y,2)},${r(o.z,2)})`,[-6,3],"Consolas",21)
-    var txtx = new Text_(`P( t, cos t, sin t)`,[-6,2.5],"Consolas",21)
-    var v = new Vector3(1/5,-o.z,o.y,o)
-    cs(ctx,o.xr,o.yr)
-    var Vectors = o.pvectors()
+    var p = new Plan3D([-5,5],t);
+    var o = new Point3D(Math.cos(a),Math.sin(a),a/20,p);
+    var txt = new Text_(`P(${r(o.x,2)},${r(o.y,2)},${r(o.z,2)})`,[-6,3],"Consolas",21);
+    var txtx = new Text_(`P( t, cos t, sin t)`,[-6,2.5],"Consolas",21);
+    var v = new Vector3(-o.y,o.x,1/20,o);
+    cs(ctx,o,t,p);
+    var Vectors = o.pvectors();
     Vectors[0].draw(ctx,unit,centerX,centerY,"rgba(255,0,255)")
     Vectors[1].draw(ctx,unit,centerX,centerY,"rgba(255,0,255)")
     Vectors[2].draw(ctx,unit,centerX,centerY,"rgba(255,0,255)")

@@ -77,8 +77,8 @@ class Plan3D{
         this.i = new Vector(Math.cos(this.a),Math.sin(this.a));
         this.j = new Vector(-Math.cos(Math.PI/4+this.a),-Math.sin(Math.PI/4+this.a));
         this.k = new Vector(Math.cos(Math.PI/2),Math.sin(Math.PI/2));
-        this.xr = (x,y)=>{ return x*Math.cos(this.a)-Math.cos(this.a+Math.PI/4)*y};
-        this.yr = (x,y,z)=>{ return x*Math.sin(this.a)+z-Math.sin(this.a+Math.PI/4)*y};
+        this.xr = (x,y)=>x * Math.cos(this.a) - Math.cos(this.a + Math.PI / 4) * y;
+        this.yr = (x,y,z)=>x * Math.sin(this.a) + z - Math.sin(this.a+Math.PI/4) * y;
     }
     /**
      * 

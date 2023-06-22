@@ -8,6 +8,12 @@
     <meta name="description" content="Masm is an a realtime math simulation engine that has
      many basic and fundemantal mathematical objects and functions to make beautifull animation
      that makes all the complexe math as simple as it is possible">
+    <meta name="keywords" content="Math , Animation , realtime simulation , js , 
+    javascript , graphical-sim , gui , canvas , Maroc , Web Animation , app">
+    <meta name="robots" content="index" >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600&family=Roboto+Mono&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="logoc.jpg" type="image/jpg">
     <title>Masm</title>
     <style>
@@ -15,19 +21,70 @@
             margin: 0;
             padding: 0;
             display: flex;
-            overflow: hidden;
             justify-content: center;
             align-items: center;
+            overflow-x: hidden;
             /* center horizontaly  */
             /* center horizontaly child items*/
             flex-direction: column;
             background-color: black;
+            font-family: "Manrope";
+            scroll-behavior: smooth;
+        }
+        .title1{
+            color: azure;
+            background-color: rgba(30, 30, 134,0.3);
+            margin-top: 35px;
+            margin-left: 15%;
+            margin-right: 15%;
+            padding: 25px;
+            border-radius: 15px;
+            transition: cubic-bezier(.175, .885, 0.32, 1.275) 400ms;
+        }
+        .title1:hover{
+            transform: scale(1.4);
+            transform: perspective(2);
+            box-shadow: 1px 1px 10px 5px rgba(25, 25, 255,0.3);
+        }
+        .para{
+            color:azure;
+            background-color:rgba(30, 30, 134,0.3);
+            margin: 25px;
+            margin-left: 15%;
+            margin-right: 15%;
+            padding: 35px;
+            border-radius: 15px;
+            font-size: 14px;
+            filter: blur(3px) contrast(2) brightness(0.7);
+            transition: cubic-bezier(0.455, 0.03, 0.515, 0.955) 400ms;
+        }
+        .para:hover{
+            scale: 1.1;
+            filter:blur(0px) ;
+        }
+        .t2{
+            color:azure;
+            margin: 25px;
+            transition: cubic-bezier(0.68, 0.15, 0.265, 1.55) 800ms;
+        }
+        .t2:hover{
+            text-decoration: overline;
+            transform: scale(1.1);
+            filter: brightness(2);
+        }
+        span{
+            color:azure;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            font-size: 24px;
         }
         .listex{
             background-color: black;
-            border: 2px solid yellow;
+            border: 2px solid rgba(53, 53, 135, 0.4);
             padding: 20px;
             font-size: 26px;
+            border-radius:10px ;
         }
         .ex{
             background-color: aliceblue;
@@ -49,13 +106,64 @@
         .ex a:hover{
             background-color: rgb(50, 50, 138);
             box-shadow: gray 10px 1px 10px;
-            transform: scale(2);
+        }
+        .controls{
+            background-color: rgba(30, 30, 134,0.3);
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            margin:25px;
+            transition: 2s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+        .controls:hover{
+            background-color: rgba(55, 55, 134,1);
+            transform: translateY(-100px);
+        }
+        span{
+            margin: auto;
+        }
+        footer{
+            background-color: rgba(30, 30, 134,0.3);
+            width: 100%;
+            padding: 15px;
+            color: azure;
+            text-align: center;
+        }
+        .text{
+            font-size: 26px;
+            font-weight: bolder;
+        }
+        footer a {
+            background-color: aliceblue;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 25px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        footer a:hover{
+            box-shadow: 1px 1px 10px 2px gray;
+            color: rgba(30, 30, 134,0.3);
         }
     </style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5973629231236405"
-     crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
 </head>
 <body>
+    <h1 class="title1">
+        What is Masm (Math animation system and mecanics)?
+    </h1>
+    <p class="para">
+    Masm is a realtime simulation engine fully written in Javascript
+    that requires some basic scripting to make beautifull and meaninfull
+    animation that show the beauty of our life's rules (math and physics) 
+    and can be also used to verify geometric proofs and formulas.
+    have fun ! here are some examples : </p>
+    <h2 class="t2">
+        Examples (prototypes) : 
+    </h2>
     <div class="listex">
         <div class="ex">
             Functions
@@ -70,6 +178,38 @@
             <a href="./examples/VectorFields/vfield.html">try it out</a>
         </div>
     </div>
+    <h2 class="t2">
+        Controls:
+    </h2>
+    <div class="controls">
+        <span>
+            <img src="./data/W_key.svg" width="55" alt="W key">
+            <img src="./data/X_key.svg" width="55"alt="X key">Zoom in and out 
+        </span>
+        <span>
+            <img src="./data/A_key.svg" width="55" alt="A key">
+            <img src="./data/E_key.svg" width="55"alt="E key">Change the value of T 
+        </span>
+        <span>
+            <img src="data/ZQSD_key.svg"width="110" alt="ZQSD_key">Move the camera 
+        </span>
+        <span>
+            <img src="data/R_key.svg"width="110" alt="R_key">reset value of T 
+        </span>
+        <span>
+            <img src="data/shift_key.svg"width="110" alt="shift_key">center the Camera 
+        </span>
+        <span>
+            <img src="data/ctrl_key.svg"width="110" alt="ctrl_key">rest the zoom 
+        </span>
+    </div>
+    <footer >
+        <h3 style="font-size: 24px;" class="t2">
+            Masm Project v1.35
+        </h3>
+        <a href="https://github.com/yassirfariz/Masm"> Github repo </a>
+        <h1>Yassir Fariz</h1>
+    </footer>
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
@@ -92,7 +232,6 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
-        console.table(analytics)
     </script>
 </body>
 </html>

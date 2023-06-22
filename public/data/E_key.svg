@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="E_key.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.72515432"
+     inkscape:cx="-5.5160673"
+     inkscape:cy="561.94935"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <rect
+       x="158.58693"
+       y="351.64929"
+       width="245.46499"
+       height="182.03022"
+       id="rect167" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#1a1a1a;stroke-width:0.264583"
+       id="rect2616"
+       width="110.18919"
+       height="110.18919"
+       x="52.175678"
+       y="79.175674"
+       rx="17.148649"
+       ry="17.148649" />
+    <rect
+       style="fill:#ffffff;stroke-width:0.26767"
+       id="rect2828"
+       width="96.371918"
+       height="98.513527"
+       x="62.709164"
+       y="82.824318"
+       rx="17.421076"
+       ry="17.276623" />
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:67.4688px;line-height:1.1;font-family:Manrope;-inkscape-font-specification:Manrope;white-space:pre;inline-size:48.761;display:inline;fill:#1a1a1a;stroke-width:0.330988"
+     x="51.284081"
+     y="139.89131"
+     id="text173"
+     transform="translate(18.243246,6.567567)"><tspan
+       x="51.284081"
+       y="139.89131"
+       id="tspan3307">E</tspan></text>
+</svg>
