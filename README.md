@@ -1,4 +1,4 @@
-# Masm
+# Mare
 A graphing program that simulates geometry objects (Vectors , Points , Vector fields ...)
 # Note that this project is not fully completed and it will be supported until Q4 2025
 ## Rendering 
