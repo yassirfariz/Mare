@@ -46,7 +46,7 @@ function animate(){
     var p = new Plan3D([-5,5],t);
     var o = new Point3D(Math.cos(a),Math.sin(a),a/20,p);
     var txt = new Text_(`P(${r(o.x,2)},${r(o.y,2)},${r(o.z,2)})`,[-6,3],"Consolas",21);
-    var txtx = new Text_(`P( t, cos t, sin t)`,[-6,2.5],"Consolas",21);
+    var txtx = new Text_(`P(cos a, sin a, a)`,[-6,2.5],"Consolas",21);
     var v = new Vector3(-o.y,o.x,1/20,o);
     cs(ctx,o,t,p);
     var Vectors = o.pvectors();
