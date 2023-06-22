@@ -55,7 +55,7 @@
             border-radius: 15px;
             font-size: 14px;
             filter: blur(3px) contrast(2) brightness(0.7);
-            transition: cubic-bezier(0.455, 0.03, 0.515, 0.955) 400ms;
+            transition: cubic-bezier(0.455, 0.03, 0.515, 0.955) 500ms;
         }
         .para:hover{
             scale: 1.1;
@@ -91,13 +91,16 @@
             border: none;
             padding: 10px;
             margin: 10px;
-            display: flex;
+            display: grid;
         }
         .ex a {
             background-color: rgb(30, 30, 134);
             text-decoration: none;
             padding: 5px;
+            grid-area: span;
             color: whitesmoke;
+            grid-column: 2;
+            grid-auto-flow: 2 2;
             border-radius:10px;
             font-weight: 1000;
             margin-right: 0;transition: ease-in-out 200ms;
@@ -170,7 +173,7 @@
             <a href="./examples/functions/functions.html">try it out</a>
         </div>
         <div class="ex">
-            3D
+            3D Graph
             <a href="./examples/3D plane/3d.html">try it out</a>
         </div>
         <div class="ex">

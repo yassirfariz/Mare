@@ -33,6 +33,7 @@ function controls(dx=25,dz=5,dt=Math.PI/50){
         if (e.key == "r") {t = 0}
         if (e.key == "Shift"){centerX = canvas.width/2;centerY = canvas.height/2}
         if (e.key == "Control"){unit = 100}
+        if (e.key == "Escape"){window.location.href="../../index.html"}
     })
 }
 class Text_{
