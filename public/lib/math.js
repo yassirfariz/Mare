@@ -276,13 +276,16 @@ class Point{
     }
     /**
      * @version 1.0
-     * @param {Point} p a point object parameter
-     * draws a cercle centered on the point's coordinates to represente it
+     * @param {string} [color="rgba(255,255,255,1)"] 
+     * @param {number} CenterX
+     * @param {number} CenterY
+     * @param {number} unit
+     * @param {CanvasRenderingContext2D} ctx  
      */
     draw(ctx,unit,CenterX,CenterY,color="rgba(255,255,255,1)"){
         ctx.beginPath()
         ctx.fillStyle= color
-        ctx.ellipse(CenterX+this.x*unit,CenterY+this.y*-unit,5,5,0,0,2*Math.PI)
+        ctx.ellipse(CenterX+this.x*unit,CenterY+this.y*-unit,unit/45+1.25,unit/45+1.25,0,0,2*Math.PI)
         ctx.fill();
         ctx.closePath()
 
@@ -339,6 +342,43 @@ class Point3D{
     }
 }
 /**
+ * @class trigCercle
+ */
+class trigCercle{
+    /**
+     * @param {Point} origin
+     * @param {number} r 
+     */
+    constructor (origin,r){
+        this.origin = origin
+        this.r = r
+    }
+    /**
+     * 
+     * @param {CanvasRenderingContext2D} ctx 
+     * @param {number} unit 
+     * @param {number} centerX 
+     * @param {number} centerY 
+     * @param {string} color 
+     */
+    draw(ctx,unit,centerX,centerY,color){
+        ctx.beginPath()
+        ctx.strokeStyle = color
+        ctx.lineWidth = 3
+        ctx.ellipse(centerX+unit*this.origin.x,centerY-unit*this.origin.y,this.r*unit,this.r*unit,0,0,Math.PI*2,false)
+        for (let i=0; i<2*Math.PI;i+=Math.PI/6){
+            // what i need to do draw a line tangente to the cercle at each (i)
+            let xi = this.r*Math.cos(i)
+            let dx = 5/unit*Math.cos(i) 
+            ctx.moveTo(centerX+unit*(this.origin.x+xi-dx),centerY-unit*((xi-dx)*Math.tan(i)+this.origin.y))
+            ctx.lineTo(centerX+unit*(this.origin.x+xi+dx),centerY-unit*((xi+dx)*Math.tan(i)+this.origin.y))
+            console.log() 
+        }
+        ctx.stroke()
+        ctx.closePath()
+    }
+} 
+/**
 *@class Func3D
 */
 class Line3D{
@@ -390,12 +430,11 @@ class Line3D{
      * a:a value from 0 to 1
      * a function draw algorithm
      */
-    constructor (f,linear,range = [-3,3],performance = 1,color="rgba(255,255,255,1)"){
+    constructor (f,linear,range = [-3,3],performance = 1){
         this.f = f || function(x,y){return x}
         this.linear = linear
         this.range = range
         this.per = performance 
-        this.color = color
         this.c = this.f(0)
         this.a = this.f(2)-this.f(1)
     }
@@ -405,9 +444,9 @@ class Line3D{
      * draws a cercle centered on the point's coordinates to represente it
      * @param {CanvasRenderingContext2D} ctx
      */
-    draw(ctx,u,CenterX,CenterY){
+    draw(ctx,u,CenterX,CenterY,color="rgba(255,255,255,1)"){
         ctx.beginPath()
-        ctx.strokeStyle = this.color
+        ctx.strokeStyle = color
         ctx.lineWidth = 4;
         if(this.linear){
             ctx.moveTo(CenterX+this.range[0]*u,CenterY-u*this.f(this.range[0]))
@@ -446,7 +485,6 @@ class Line3D{
         return cv.scale(1/cv.norm())
     }
 }
-
 /**
  * @class VectorField
  */
