@@ -44,7 +44,7 @@ class Text_{
      * @param {string} font
      * @param {number} size
      */
-    constructor(content,pos,font,size){
+    constructor(content="",pos=[0,0],font="Arial",size=24){
         this.str = content;
         this.pos = pos;
         this.font = font;

@@ -65,6 +65,7 @@ class Plan{
         ctx.closePath()
     }
 }
+
 class Plan3D{
     /**
      * @param {number} xrange 
@@ -285,7 +286,7 @@ class Point{
     draw(ctx,unit,CenterX,CenterY,color="rgba(255,255,255,1)"){
         ctx.beginPath()
         ctx.fillStyle= color
-        ctx.ellipse(CenterX+this.x*unit,CenterY+this.y*-unit,unit/45+1.25,unit/45+1.25,0,0,2*Math.PI)
+        ctx.ellipse(CenterX+this.x*unit,CenterY+this.y*-unit,unit/45+2,unit/45+2,0,0,2*Math.PI)
         ctx.fill();
         ctx.closePath()
 
@@ -331,7 +332,7 @@ class Point3D{
         var v1 = new Vector(-this.y*Math.cos(this.t+Math.PI/4),-this.y*Math.sin(this.t+Math.PI/4),new Point(this.x*Math.cos(this.t),this.x*Math.sin(this.t)))
         var v3 = new Vector(this.x*Math.cos(this.t),this.x*Math.sin(this.t),new Point(v1.x,v1.y)) 
         var v2 = new Vector(0,this.z,new Point(this.xr,this.yr-this.z))
-        return [v1,v2,v3]
+        return [v1,v3,v2]
     }
     /**
      * 
@@ -378,39 +379,6 @@ class trigCercle{
         ctx.closePath()
     }
 } 
-/**
-*@class Func3D
-*/
-class Line3D{
-    /**
-    * @param {Vector3} v
-    * @parma {number[]} Mrange
-    * @param {number[]} mrange
-    */
-    constructor (v,Mrange,mrange){
-        this.x0 = v.origin.space.xr(Mrange[0],Mrange[1])
-        this.y0 = v.origin.space.yr(Mrange[0],Mrange[1],Mrange[2])
-        this.x = v.origin.space.xr(mrange[0],mrange[1])
-        this.y = v.origin.space.yr(mrange[0],mrange[1],mrange[2])
-        console.log(this.x0,this.y0,this.x,this.y)
-    }
-    /**
-    * @param {CanvasRenderingContext2D} ctx
-    
-    * @param {number} centerX
-    * @param {number} centerY
-    * @param {number} u
-    * @param {string} color
-    */     
-    draw(ctx,centerX,centerY,u,color){
-        ctx.moveTo(centerX+this.x0*u,centerY+this.y0*-u)
-        ctx.lineTo(centerX+this.x*u,centerY+this.y*-u)
-        ctx.strokeStyle = color
-        ctx.lineWidth = 2
-        ctx.stroke()
-        ctx.closePath()
-    }
-}
 /**
  * @class Point class 
  * @param {Function} f 
@@ -483,6 +451,119 @@ class Line3D{
         console.log(x*slope(this.f,x))
         let cv = new Vector(Math.abs(x),Math.abs(x)*slope(this.f,x),new Point(t,this.f(t)))
         return cv.scale(1/cv.norm())
+    }
+}
+class Func3D{
+    /**
+     * 
+     * @param {Function} fx 
+     * @param {Function} fy 
+     * @param {Array<number>} xrange 
+     * @param {Boolean} linear 
+     * @param {Plan3D} plane 
+     */
+    constructor (fx,fy,fz,xrange,linear,plane){
+        this.fx = fx
+        this.fy = fy
+        this.fz = fz
+        this.a = (t) => 
+        {
+            return {
+                x:(this.fx(t+1e-10)-this.fx(t))/1e-10,
+                y:(this.fy(t+1e-10)-this.fy(t))/1e-10,
+                z:(this.fz(t+1e-10)-this.fz(t))/1e-10
+            }
+        }
+        this.c = {
+            x:this.fx(0),
+            y:this.fy(0),
+            z:this.fz(0)
+        }
+        this.xrange = xrange
+        this.linear = linear
+        this.p = plane
+    }
+    /**
+     * 
+     * @param {CanvasRenderingContext2D} ctx 
+     * @param {number} unit 
+     * @param {number} centerX 
+     * @param {number} centerY 
+     * @param {string} color 
+     */
+    draw(ctx,unit,centerX,centerY,color = "rgb(255,255,255)"){
+        if (this.linear)
+        {
+            ctx.beginPath()
+            ctx.strokeStyle = color
+            ctx.lineWidth = 2.3
+            ctx.moveTo(
+                centerX+unit*this.p.xr(this.fx(this.xrange[0]),
+                    this.fy(this.xrange[0])),
+                centerY-unit*this.p.yr(this.fx(this.xrange[0]),
+                this.fy(this.xrange[0]),this.fz(this.xrange[0])))
+            ctx.lineTo(
+                centerX+unit*this.p.xr(this.fx(this.xrange[1]),this.fy(this.xrange[1])),
+                centerY-unit*this.p.yr(this.fx(this.xrange[1]),this.fy(this.xrange[1]),this.fz(this.xrange[1])))
+            ctx.stroke()
+            ctx.closePath()
+        }
+        else{
+            ctx.beginPath()
+            ctx.strokeStyle = color
+                ctx.lineWidth = 2.5
+                if (p.length > 15) {
+                    for(let i=1;i<p.length;i+=1){
+                        ctx.moveTo(centerX+p[i-1][0]*unit,centerY-p[i-1][1]*unit)
+                        ctx.lineTo(centerX+p[i][0]*unit,centerY-p[i][1]*unit)
+                    }
+                }
+                ctx.stroke()
+            ctx.closePath()
+            if(t!=ct){
+                for(let i=0;i<p.length;i+=1){
+                    var [x,y] = [p[i][2],p[i][3]]  
+                    p[i][0] = z.xr(x,y);
+                    p[i][1] = z.yr(x,y,p[i][4]);
+                }
+                ct=t
+            }
+        }
+    }
+    /**
+     * @returns arr of points
+     */
+    Epoint(){
+        return [new Point3D(
+            this.fx(this.xrange[0]),this.fy(this.xrange[0]),this.fz(this.xrange[0]),this.p
+        ),new Point3D(
+            this.fx(this.xrange[1]),this.fy(this.xrange[1]),this.fz(this.xrange[1]),this.p
+        )]
+    }
+    VExt(ctx,unit,centerX,centerY,Pcolor,Scolor){
+        var [a,b] = this.Epoint()
+        var [v1,v2,v3] = a.pvectors()
+        var [z1,z2,z3] = b.pvectors()
+        a.draw(ctx,unit,centerX,centerY,Pcolor)
+        b.draw(ctx,unit,centerX,centerY,Scolor)
+        v1.draw(ctx,unit,centerX,centerY,Pcolor)
+        v2.draw(ctx,unit,centerX,centerY,Pcolor)
+        v3.draw(ctx,unit,centerX,centerY,Pcolor)
+        z1.draw(ctx,unit,centerX,centerY,Scolor)
+        z2.draw(ctx,unit,centerX,centerY,Scolor)
+        z3.draw(ctx,unit,centerX,centerY,Scolor)
+    }
+    /**
+     * @param {Func3D} f 
+     */
+    Inter(f){
+        let ts = {
+            tx:(f.c.x-this.c.x)/(this.a(0).x-f.a(0).x),
+            ty:(f.c.y-this.c.y)/(this.a(0).y-f.a(0).y),
+            tz:(f.c.z-this.c.z)/(this.a(0).z-f.a(0).z)
+        }
+        console.log(ts)
+        return new Point3D(f.fx(ts.tx),f.fy(ts.tx),f.fz(ts.tx),this.p)
     }
 }
 /**

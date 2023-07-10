@@ -1,7 +1,8 @@
 var canvas = document.getElementById("canvas")
 var [ctx,unit,centerX,centerY,t] = initialize(canvas,1.25)
 t=0
-unit = 135
+unit = 120
+
 controls()
 function animate(){
     ctx.fillStyle = "black";
@@ -15,7 +16,10 @@ function animate(){
     var tc = new Func(x=>Math.tan(t)*(x-Math.cos(t))+Math.sin(t),true,[0,Math.cos(t)])
     var c2 = new trigCercle(new Point(Math.cos(t),Math.sin(t)),1)
     var o = s.intersection(zc)
+    var txt = new Text_(`O(${Math.round(o.x*100)/100},${Math.round(o.y*100)/100})`,
+    [-4,2],"Consolas",24)
     var c3 = new trigCercle(o,1)
+    txt.draw(ctx,unit,centerX,centerY)
     s.draw(ctx,unit,centerX,centerY,"rgb(123,11,125)")
     o.draw(ctx,unit,centerX,centerY)
     c.draw(ctx,unit,centerX,centerY,"rgb(15,133,180)")

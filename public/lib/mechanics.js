@@ -6,79 +6,134 @@
  * @property {number} e - euler constant
  */
 class Constants{
-    static g = 9.8;
+    static g = 9.81;
     static G = 6.67430e-11;
     static pi = Math.PI;
     static e = Math.E;
-}/**
- * @class Object 
- */
-class obj{
+}
+class Shapes{
+    static Cercle = class {
+        /**
+         * 
+         * @param {number} x 
+         * @param {number} y 
+         * @param {number} r 
+         */
+        constructor(x,y,r){
+            this.x = x
+            this.y = y
+            this.r = r
+        }
+        /**
+         * 
+         * @param {CanvasRenderingContext2D} ctx 
+         * @param {number} unit 
+         * @param {number} centerX 
+         * @param {number} centerY 
+         * @param {string} color 
+         */
+        draw(ctx,unit,centerX,centerY,color){
+            ctx.beginPath()
+            ctx.lineWidth = 3.5
+            ctx.strokeStyle = color 
+            ctx.ellipse(centerX+unit*this.x,centerY-unit*this.y,
+                        this.r*unit,this.r*unit,0,0,2*Math.PI,false)
+            ctx.stroke()
+            ctx.closePath()
+        }
+        /**
+         * @returns Point has Center of Gravity
+         */
+        getCenterG(){
+            return new Point(this.x,this.y)
+        }
+        colBox(){
+            return 
+        }
+        
+    }
+    static Rect = class Rect {
+       /**
+         * 
+         * @param {number} x 
+         * @param {number} y 
+         * @param {number} r 
+         */
+       constructor(x,y,w,h){
+        this.x = x
+        this.y = y
+        this.w = w
+        this.h = h
+
+    }
     /**
-     * @param {CanvasRenderingContext2D} ctx
-     * @param {number} unit
-     * @param {object} center has x and y
      * 
-     * @param {number} shape 0 rectangle 1 for ellipse
-     * @param {JSON} args
-     * @param {number} mass in Kg
-     */
-    object
-    mass
-    constructor (unit,center,shape,args,mass){
-        this.mass = mass
-        this.object = {}
-        if(shape == 0){
-            this.object = {type:0,x:args.x*unit+center.x,y:args.y*-unit+center.y,w:args.w*unit,h:args.h*unit}
-        }else {
-            this.object = {type:1,x:args.x*unit+center.x,y:args.y*-unit+center.y,rx:args.rx,ry:args.ry}
-        }
-    }
-    /**
-     * @function drawobj
      * @param {CanvasRenderingContext2D} ctx 
-     * @param {string} color
+     * @param {number} unit 
+     * @param {number} centerX 
+     * @param {number} centerY 
+     * @param {string} color 
      */
-    drawobj(ctx,color){
-        if (this.object.type == 1){
-            ctx.beginPath()
-            ctx.ellipse(this.object.x,this.object.y,this.object.rx,this.object.ry,0,0,Math.PI*2)
-            ctx.fillStyle = color
-            ctx.fill()
-            ctx.closePath()
-        }
-        else{
-            ctx.beginPath()
-            ctx.rect(this.object.x,this.object.y,this.object.w,this.object.h)
-            ctx.fillStyle = color
-            ctx.fill()
-            ctx.closePath()
-        }
+    draw(ctx,unit,centerX,centerY,color){
+        ctx.beginPath()
+        ctx.lineWidth = 3.5
+        ctx.fillStyle = color 
+        ctx.rect(centerX+unit*(2*this.x-this.w)/2,centerY-unit*(2*this.y+this.h)/2,
+                    this.w*unit,this.h*unit)
+        ctx.fill()
+        ctx.closePath()
     }
     /**
-     * center of gravity
+     * @returns Point has Center of Gravity
      */
-    CenterG(){
-        if (this.object.type == 1){
-            return new Point((this.object.x-centerX)/unit,-(this.object.y-centerY)/unit)
-        }
-        else {
-            return new Point((this.object.x+this.object.w/2)/unit,(this.object.y+this.object.h/2)/unit)
-        }
+    getCenterG(){
+        return new Point(this.x,this.y)
     }
-    /**
-     * @return {number} w in N
-     */
-    weight = 0
-    Weight(){
-        this.weight = this.mass*Constants.g
-        return this.weight
+     
     }
 }
+
+/**
+ * @class Entity
+ */
+class Entity{
+    /**
+     * 
+     * @param {Shapes} shape 
+     * @param {number} mass 
+     */
+    constructor(shape,mass){
+        this.shape = shape
+        this.mass = mass
+    }
+    draw(ctx,unit,centerX,centerY,color){
+        this.shape.draw(ctx,unit,centerX,centerY,color)
+    }
+    weightF(){
+        return new Force(new Vector(0,-1,this.shape.getCenterG()),this.mass*Constants.g)
+    }
+    /**
+     * @param {Entity} en2 
+     */
+    collides(en2){
+        switch (this.shape) {
+            case Shapes.Cercle:
+                if (en2.shape){
+
+                }
+                break;
+            case Shapes.Rect:
+                break;
+            default:
+                break;
+        }
+    }
+
+}
+
 /**
  * @class mechanics as a force-based engine 
  * using newton's laws of motions
- *
  */
 class Force{
     /**
@@ -87,8 +142,9 @@ class Force{
      * @param {number} scaler 
      */
     constructor(Vector,scaler){
-        this.force = Vector
+        this.forceV = Vector
         this.intensity = Vector.norm()*scaler
+        this.scaled =this.forceV.scale(this.intensity)
     }
     /**
      * 
@@ -96,19 +152,18 @@ class Force{
      * @returns {Vector[]} vx,vy are the x and y components
      */
     projection(da){
-        var vx = new Vector(Math.cos(da)*this.force.norm()*Math.cos(da-Math.atan(this.force.y/this.force.x)),Math.sin(da)*this.force.norm()*Math.cos(da-Math.atan(this.force.y/this.force.x)))
+        var vx = new Vector(Math.cos(da)*this.forceV.norm()*Math.cos(da-Math.atan(this.forceV.y/this.forceV.x)),Math.sin(da)*this.forceV.norm()*Math.cos(da-Math.atan(this.forceV.y/this.forceV.x)))
         var vy = this.force.sub(vx)
         return [vx,vy]
     }
-    /**
+    /** 
      * 
-     * @param {obj} object 
+     * @param {Entity} ent
+     * @param {number} t
+     * 
      */
-    exercice(object){
-        this.vx += this.force.x/object.mass
-        this.vy += this.force.y/object.mass
-        object.object.x += this.vx*this.intensity
-        object.object.y -= this.vy*this.intensity
+    exercice(ent,t){ 
+        ent.shape.x += t * 1/2*this.forceV.x/ent.mass 
+        ent.shape.y += t * 1/2*this.forceV.y/ent.mass 
     }
 }
-
