@@ -5,15 +5,20 @@
  * @returns {[CanvasRenderingContext2D,number,number,number,number]}
  */
 
-function initialize(canvas,q = 1.35){
+function initialize(canvas,q = 1.35,w){
     var ctx = canvas.getContext('2d');
     canvas.height = innerHeight*q;
     canvas.width = innerWidth*q;
-    canvas.style = "width:100%;height:100%;"
+    if( w == null ){
+        canvas.style = `width:100%;height:100%`
+    }
+    else{
+        canvas.style = `width:${w}vw;aspect-ratio:${innerWidth/innerHeight};`
+    } 
     var centerX = canvas.width/2;
     var centerY = canvas.height/2;
     var unit = 38*centerX/centerY;
-    var t = -4;
+    var t = 0;
     return [ctx,unit,centerX,centerY,t]
 }
 /**
@@ -21,7 +26,6 @@ function initialize(canvas,q = 1.35){
  */
 function controls(dx=25,dz=5,dt=Math.PI/50){
     window.addEventListener("keydown",(e)=>{
-        console.log(e.key)
         if (e.key == "x"){unit+=dz}
         if (e.key == "w"){unit-=dz}
         if (e.key == "d"){centerX-=dx}

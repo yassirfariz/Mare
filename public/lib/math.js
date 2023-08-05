@@ -2,8 +2,9 @@ function drawArrow(ctx, fromx, fromy, tox, toy, arrowWidth, color){
     //variables to be used when creating the arrow
     var headlen = 10;   // length of head in pixels
     var angle = Math.atan2(toy-fromy,tox-fromx);
- 
+    
     ctx.save();
+    ctx.fillStyle = "black";
     ctx.strokeStyle = color;
  
     //starting path of the arrow from the start square to the end square
@@ -33,8 +34,9 @@ function drawArrow(ctx, fromx, fromy, tox, toy, arrowWidth, color){
  
     //draws the paths created above
     ctx.stroke();
-    ctx.fill()
+    ctx.fill();
     ctx.restore();
+    ctx.closePath();
 }
 /**
  * @class 2D plan 
@@ -65,7 +67,6 @@ class Plan{
         ctx.closePath()
     }
 }
-
 class Plan3D{
     /**
      * @param {number} xrange 
@@ -205,6 +206,11 @@ class Vector{
     project(theta){
         var vx = new Vector(Math.cos(theta)*this.norm()*Math.cos(theta-Math.atan(this.y/this.x)),
         Math.sin(theta)*this.norm()*Math.cos(theta-Math.atan(this.y/this.x)),this.origin);
+        if (this.x<0)    
+        {
+            vx = vx.inverse() 
+            
+        } 
         var vy = this.sub(vx)
         return [vx,vy]
     }
@@ -244,18 +250,24 @@ class Vector3{
         return Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z);
     }
     /**
+     * @param {number} K
+     */
+    scale(K){
+        return new Vector3(this.x*K,this.y*K,this.z*K,this.origin)
+    }
+    /**
      * @param {Vector3} other 
      * @returns {Vector3}
      */
     add(other){
-        return Vector3(this.x + other.x, this.y + other.y,this.z+other.z,this.origin);
+        return new Vector3(this.x + other.x, this.y + other.y,this.z+other.z,this.origin);
     }
     /**
      * @param {Vector3} other 
      * @returns {Vector3}
      */
     sub(other){
-        return Vector3(this.x + other.x, this.y + other.y,this.z+other.z,this.origin);
+        return new Vector3(this.x + other.x, this.y + other.y,this.z+other.z,this.origin);
     }
     
 }
@@ -291,6 +303,12 @@ class Point{
         ctx.closePath()
 
     }
+    /**
+     * get position vector
+     */
+    pVec(){
+        return new Vector(this.x,this.y)
+    }
 }
 /**
  * @class Point3D
@@ -308,7 +326,8 @@ class Point3D{
         this.t = space.a;
         this.space = space; 
         this.xr = x*Math.cos(this.t)-Math.cos(this.t+Math.PI/4)*y;
-        this.yr = x*Math.sin(this.t)+z-Math.sin(this.t+Math.PI/4)*y;   }
+        this.yr = x*Math.sin(this.t)+z-Math.sin(this.t+Math.PI/4)*y;  
+    }
     /**
      * 
      * @param {CanvasRenderingContext2D} ctx 
@@ -318,6 +337,8 @@ class Point3D{
      * @param {string} color 
      */
     draw(ctx,unit,centerX,centerY,color = "rgba(255,255,255)"){
+        this.xr = this.x*Math.cos(this.t)-Math.cos(this.t+Math.PI/4)*this.y;
+        this.yr = this.x*Math.sin(this.t)+this.z-Math.sin(this.t+Math.PI/4)*this.y;  
         ctx.beginPath();
         ctx.ellipse(centerX+this.xr*unit,centerY+this.yr*-unit,5,5,0,0,2*Math.PI);
         ctx.fillStyle = color;
@@ -633,6 +654,40 @@ class VectorField{
         ctx.closePath()
     }
 
+}
+class VectorField3D{
+    /**
+    * @param {Int16Array} xrange
+    * @param {Int16Array} yrange
+    * @param {Int16Array} zrange
+    * @param {Function} f1 xfunction for the individual vector
+    * @param {Function} f2 yfunction for the individual vector
+    * @param {Function} f3 yfunction for the individual vector
+    * @param {number} cr
+    */
+    constructor (xrange=[-2,2],yrange=[-2,2],zrange=[-2,2],f1,f2,f3,plan,cr=1){
+        this.xrange = xrange
+        this.yrange = yrange
+        this.zrange = zrange
+        this.f1 = f1
+        this.f2 = f2
+        this.f3 = f3
+        this.plan = plan
+        this.cr = cr
+    }  
+    draw(ctx,unit,centerX,centerY){
+        for (let i=this.xrange[0];i<=this.xrange[1];i+=this.cr){
+            for (let j=this.yrange[0];j<=this.yrange[1];j+=this.cr){
+                for (let k=this.zrange[0];k<=this.zrange[1];k+=this.cr)  {  
+                    var p = new Point3D(i,j,k,this.plan);
+                    p.draw(ctx,unit,centerX,centerY)
+                    var V = new Vector3(this.f1(i,j,k),this.f2(i,j,k),this.f3(i,j,k),p);
+                    V = V.scale((this.cr-this.cr/20)/(V.norm()))
+                    V.draw(ctx,unit,centerX,centerY)
+                }
+            }
+        }
+    }
 }
 /**
  * @class Transform

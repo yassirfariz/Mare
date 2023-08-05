@@ -4,9 +4,9 @@ controls()
 function r(x,d){
     return Math.round(x*10**d)/10**d
 }
-p = []
+var p = []
 t=0
-ct = t
+var ct = t
 /**
  * 
  * @param {CanvasRenderingContext2D} ctx 
