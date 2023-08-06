@@ -1,5 +1,5 @@
 var canvas = document.getElementById("canvas")
-var [ctx,unit,centerX,centerY,t] = initialize(canvas,1.11)
+var [ctx,unit,centerX,centerY,t] = initialize(canvas,1.3)
 controls()
 unit -= 25
 t = 0
@@ -35,9 +35,13 @@ function cs(ctx,o,t,z) {
         ct=t
     }
 }
+function round(x,n){
+    return Math.round(x*(10**n))/10**n
+}
 var p = new Plan3D([-3,3],t)
 var point = new Point3D(7,2,3,p)
 point.t = t
+var functions = new Text_("V(-y,x-y,-x)",[-12,5],"consolas",46)
 function animate(){
     p.a = t
     point.t = t
@@ -49,6 +53,7 @@ function animate(){
         p,1.3
     )  
     var dvec = new Vector3(vf.f1(point.x,point.y,point.z),vf.f2(point.x,point.y,point.z),vf.f3(point.x,point.y,point.z),point)
+    var pointcord = new Text_(`p(${round(point.x,3)},${round(point.y,3)},${round(point.z,3)})`,[point.xr+0.5,point.yr+0.5],"Consolas",32)
     point.x += vf.f1(point.x,point.y,point.z)/150
     point.y += vf.f2(point.x,point.y,point.z)/150
     point.z += vf.f3(point.x,point.y,point.z)/150
@@ -58,6 +63,8 @@ function animate(){
     dvec.draw(ctx,unit,centerX,centerY,"rgb(75,255,120)")
     p.draw(ctx,unit,centerX,centerY,"rgb(25,145,100)")
     vf.draw(ctx,unit,centerX,centerY)
+    functions.draw(ctx,unit,centerX,centerY,"rgb(255,25,25)")
+    pointcord.draw(ctx,unit,centerX,centerY,"rgb(200,255,225)")
     requestAnimationFrame(animate);  
 }
 animate()
