@@ -8,7 +8,7 @@ ct = t
 /** 
  * @param {CanvasRenderingContext2D} ctx 
  * @param {Point3D} o 
- * @param {time} t 
+ * @param {number} t 
  * @param {number[number[2]]} arr 
  * @param {Plan3D} space 
 */
